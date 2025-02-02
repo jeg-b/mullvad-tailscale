@@ -3,14 +3,12 @@ define RESOLVER_ADDRS = {
 }
 
 define EXCLUDED_IPS = {
-    100.200.300.400,
-    100.500.600.700
+    100.64.0.0/10
 }
 
 # Comment the following block if you do not want IPv6 support.
 define EXCLUDED_IPV6 = {
-    exam:ple:change:exam:ple:add:ress:bf04,
-    exam:ple:change:exam:ple:add:ress:6951
+	fd7a:115c:a1e0::/48
 }
 
 table inet mullvad-ts {
