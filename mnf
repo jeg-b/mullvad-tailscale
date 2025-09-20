@@ -254,7 +254,7 @@ up() {
 
   # Connect to Mullvad
   printf "[INFO] Connecting to server '%s'...\n" "$relay"
-  prefix_output mullvad relay set hostname "$relay"
+  prefix_output mullvad relay set location "$relay"
   prefix_output mullvad connect -w
 
   if [[ "$zerotier" = true ]]; then
