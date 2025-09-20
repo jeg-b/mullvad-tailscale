@@ -2,7 +2,7 @@
 
 # ---------------------------
 # CONFIG VARIABLES YOU SHOULD CHANGE
-RULES_DIR="$HOME/Software/mullvad-tailscale/" # Path to the dir in which mullvad.rules file is located.
+RULES_DIR="$(dirname "$(realpath "$0")")" # Path to the directory where the script is located.
 EXCLUDE_COUNTRY_CODES=(us ca jp au hk gb) # Country codes to avoid. Set to '' to allow all.
 # INCLUDE_COUNTRY_CODES=(fr gb) # Country codes to connect to. Uncomment to use. Overridden by -c option. Overrides EXCLUDE_COUNTRY_CODES.
 # DNS=(1.1.1.1 8.8.8.8) # Custom DNS servers for Mullvad. Uncomment to use. Overridden by -d option.
