@@ -3,32 +3,25 @@ define RESOLVER_ADDRS = {
 }
 
 define EXCLUDED_IPS = {
-    100.200.300.400,
-    100.500.600.700
+	100.64.0.0/10
 }
 
 # Comment the following block if you do not want IPv6 support.
 define EXCLUDED_IPV6 = {
-    exam:ple:change:exam:ple:add:ress:bf04,
-    exam:ple:change:exam:ple:add:ress:6951
+	fd7a:115c:a1e0::/48
 }
 
 table inet mullvad-ts {
-  chain excludeOutgoing {
-    type route hook output priority 0; policy accept;
-    ip daddr $EXCLUDED_IPS ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
-    # Comment the following line if you do not want IPv6 support.
-    ip6 daddr $EXCLUDED_IPV6 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
-  }
-
-  chain allow-incoming {
-    type filter hook input priority -100; policy accept;
-    iifname "tailscale0" ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
-  }
-
-  chain excludeDns {
-    type filter hook output priority -10; policy accept;
-    ip daddr $RESOLVER_ADDRS udp dport 53 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
-    ip daddr $RESOLVER_ADDRS tcp dport 53 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
-  }
+        chain outgoing {
+                type route hook output priority -100; policy accept;
+                ip daddr $EXCLUDED_IPS ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+                # Comment the following line if you do not want IPv6 support.
+                ip6 daddr $EXCLUDED_IPV6 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+        }
+        chain prerouting {
+                type filter hook prerouting priority -100; policy accept;
+                ip saddr $EXCLUDED_IPS ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+                # Comment the following line if you do not want IPv6 support.
+                ip6 saddr $EXCLUDED_IPV6 ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+        }
 }
